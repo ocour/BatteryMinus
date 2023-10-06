@@ -1,8 +1,8 @@
 package com.example.battery_minus
 
 import android.os.BatteryManager
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
 class BatteryStatusConverterTest {
     @Test

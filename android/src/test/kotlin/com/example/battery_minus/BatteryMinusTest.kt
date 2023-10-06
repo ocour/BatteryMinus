@@ -2,19 +2,19 @@ package com.example.battery_minus
 
 import android.content.Context
 import android.os.BatteryManager
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.mock
 import org.mockito.Mockito.never
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner.StrictStubs::class)
 class BatteryMinusTest {
     @InjectMocks
     private lateinit var sut: BatteryMinus
@@ -25,17 +25,9 @@ class BatteryMinusTest {
     @Mock
     private lateinit var mockBatteryManager: BatteryManager
 
-    private lateinit var closeable: AutoCloseable
-
-    @BeforeTest
+    @Before
     fun setUp() {
-        closeable = MockitoAnnotations.openMocks(this)
         `when`(mockContext.getSystemService(Context.BATTERY_SERVICE)).thenReturn(mockBatteryManager)
-    }
-
-    @AfterTest
-    fun cleanUp() {
-        closeable.close()
     }
 
     // Does not currently work

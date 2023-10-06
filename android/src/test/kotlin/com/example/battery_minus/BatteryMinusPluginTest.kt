@@ -2,7 +2,7 @@ package com.example.battery_minus
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import kotlin.test.Test
+import org.junit.Test
 import org.mockito.Mockito
 
 /*
