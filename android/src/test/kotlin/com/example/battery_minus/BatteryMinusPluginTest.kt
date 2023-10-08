@@ -14,6 +14,7 @@ import org.mockito.Mockito
  */
 
 internal class BatteryMinusPluginTest {
+
   @Test
   fun onMethodCall_getPlatformVersion_returnsExpectedValue() {
     val plugin = BatteryMinusPlugin()
