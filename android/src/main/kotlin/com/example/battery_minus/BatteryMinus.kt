@@ -30,6 +30,7 @@ class BatteryMinus(private val context: Context) {
         (level * 100 / scale)
     }
 
+    // Currently BatteryManager.isCharging does NOT work
     val isCharging get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         batteryManager.isCharging
     } else {
