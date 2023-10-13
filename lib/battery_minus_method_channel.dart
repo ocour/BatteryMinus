@@ -9,9 +9,25 @@ class MethodChannelBatteryMinus extends BatteryMinusPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('battery_minus');
 
+  @visibleForTesting
+  final batteryStatusEventChannel = const EventChannel('battery_minus/battery-status');
+
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<int?> get capacity async {
+    final capacity = await methodChannel.invokeMethod<int>("capacity");
+    return capacity;
+  }
+
+  @override
+  Future<bool?> get isCharging async {
+    final isCharging = await methodChannel.invokeMethod<bool>("isCharging");
+    return isCharging;
+  }
+
+  @override
+  Stream<String> get batteryStatusStream async* {
+    yield* batteryStatusEventChannel
+        .receiveBroadcastStream()
+        .asyncMap<String>((status) => status);
   }
 }

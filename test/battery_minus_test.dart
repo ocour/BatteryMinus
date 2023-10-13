@@ -8,22 +8,50 @@ class MockBatteryMinusPlatform
     with MockPlatformInterfaceMixin
     implements BatteryMinusPlatform {
 
+  final capacityResults = [100, 99, 98];
+  final isChargingResults = [true, false];
+
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  // TODO: implement batteryStatusStream
+  Stream<String> get batteryStatusStream => throw UnimplementedError();
+
+  @override
+  Future<int?> get capacity {
+    // returns [100, 99, 98] one at a time in order
+    return Future.value(capacityResults.removeAt(0));
+  }
+
+  @override
+  Future<bool?> get isCharging {
+    // [true, false]
+    return Future.value(isChargingResults.removeAt(0));
+  }
 }
 
 void main() {
   final BatteryMinusPlatform initialPlatform = BatteryMinusPlatform.instance;
 
+  late BatteryMinus batteryMinusPlugin;
+  late MockBatteryMinusPlatform fakePlatform;
+
+  setUp(() {
+    batteryMinusPlugin = BatteryMinus();
+    fakePlatform = MockBatteryMinusPlatform();
+    BatteryMinusPlatform.instance = fakePlatform;
+  });
+
   test('$MethodChannelBatteryMinus is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelBatteryMinus>());
   });
 
-  test('getPlatformVersion', () async {
-    BatteryMinus batteryMinusPlugin = BatteryMinus();
-    MockBatteryMinusPlatform fakePlatform = MockBatteryMinusPlatform();
-    BatteryMinusPlatform.instance = fakePlatform;
+  test("capacity", () async {
+    expect(await batteryMinusPlugin.capacity, 100);
+    expect(await batteryMinusPlugin.capacity, 99);
+    expect(await batteryMinusPlugin.capacity, 98);
+  });
 
-    expect(await batteryMinusPlugin.getPlatformVersion(), '42');
+  test("capacity", () async {
+    expect(await batteryMinusPlugin.isCharging, true);
+    expect(await batteryMinusPlugin.isCharging, false);
   });
 }

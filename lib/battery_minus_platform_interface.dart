@@ -23,7 +23,15 @@ abstract class BatteryMinusPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<int?> get capacity {
+    throw UnimplementedError('capacity has not been implemented.');
+  }
+
+  Future<bool?> get isCharging {
+    throw UnimplementedError('isCharging has not been implemented.');
+  }
+
+  Stream<String> get batteryStatusStream {
+    throw UnimplementedError('batteryStatusStream has not been implemented.');
   }
 }
